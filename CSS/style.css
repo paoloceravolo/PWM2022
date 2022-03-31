@@ -1,0 +1,16 @@
+header {
+	border: 3px solid indianred;
+}
+aside {
+	background-color: lightblue;
+	border-width: 2px;
+}
+#content{
+	border: 3px solid green
+}
+main{
+	background-color: lightgrey;
+}
+#headings{
+	background-color: limegreen;
+}
