@@ -1,16 +1,44 @@
 header {
 	border: 3px solid indianred;
+	background-color: grey;
+	color: whitesmoke;
+}
+nav {
+	background-color: black;
+}
+a {
+	color: whitesmoke;
+	margin: 1px; 
+}
+a:hover{
+	color: lightblue;
+}
+nav > input {
+	float:right;
+	margin-bottom: 5px;
+	overflow: hidden;
 }
 aside {
 	background-color: lightblue;
 	border-width: 2px;
+	width: 26%;
+	float: right;
+	padding:  1%;
 }
 #content{
-	border: 3px solid green
+	border: 3px solid green;
+	width:  70%;
+	float: left;
 }
 main{
 	background-color: lightgrey;
+	margin: 10px;
+	padding: 10px;
 }
-#headings{
+#headings > article{
 	background-color: limegreen;
+	width: 46%;
+	float: left;
+	margin:  1%;
+	padding:  1%;
 }
