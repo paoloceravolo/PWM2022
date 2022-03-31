@@ -16,7 +16,6 @@ a:hover{
 nav > input {
 	float:right;
 	margin-bottom: 5px;
-	overflow: hidden;
 }
 aside {
 	background-color: lightblue;
@@ -42,3 +41,27 @@ main{
 	margin:  1%;
 	padding:  1%;
 }
+
+@media (max-width:  770px){
+	aside, #content, #headings > article {
+		float: none;
+		width:  100%;
+	}
+}
+
+@media (max-width:  700px){
+	aside {
+		float: none;
+		display: none;
+	}
+}
+
+
+
+
+
+
+
+
+
+
