@@ -26,6 +26,8 @@ let somma = (x,y) => x+y;
 
 console.log(somma(3,7));
 
+// Esempio di costruttore con funzioni anonime
+// la parola chiave this utilizzata nelle funzioni anonime definite all'interno del metodo calcola() non sta indicando l'oggetto numeri, ma il loro contesto di esecuzione.
 var numeri = {
 	x: 12,
 	y: 3,
@@ -46,6 +48,8 @@ var numeri = {
 } 
 console.log(numeri.calcola('+'));
 
+// Esempio di costruttore con funzioni arrow
+// la parola chiave this ora indica l'oggetto numeri
 var numeri = {
 	x: 12,
 	y: 3,
