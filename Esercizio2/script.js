@@ -38,7 +38,7 @@ const form = document.getElementById('todo-cont'),
     while (i--){
       values.push(localStorage.getItem(keys[i]));
     }
-    for(i=0; i<=keys.length; i++){
+    for(i=0; i<keys.length; i++){
       viewTodo(keys[i], values[i])
     }
   }
