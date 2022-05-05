@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Esempio Web Worker</title>
+	<style type="text/css">
+		header{
+			background-color: #e0e0e0;
+			height: 180px;
+		}
+		#content{
+			border: solid 1px green;
+			padding: 5px;
+			width: 600px;
+			float: left;
+		}
+	</style>
+	<script type="text/javascript">
+		function circle(x,y,r){
+			this.xcord = x;
+			this.ycord = y;
+			this.radius = r;
+			this.area = function(){return Math.PI * this.radius * this.radius};
+
+		}
+
+		// funzione attivata dal click del bottone
+		function compute(){
+			console.time("Time of the compute function");
+			// acquisizione dei valori dai campi di input
+			var rmin = document.getElementById("rmin").value;
+			var rmax = document.getElementById("rmax").value;
+			console.log(rmin, rmax);
+
+			// ciclo per ottenere gli itneri nell'intervallo di valori
+			for(i=rmin; i<=rmax; i++){
+				var cerchio = new circle(1,1,i);
+				txt = "per un raggio pari a " +i+ ", l'area ha valore " + cerchio.area();
+				document.getElementById("results").innerText += txt;
+				document.getElementById("results").innerHTML += "<br>";
+			}
+		console.timeEnd("Time of the compute function");
+		}
+	</script>
+</head>
+<body>
+	<header>
+		<h1>Esempio senza Web Worker</h1>
+	</header>
+	<div id="content">
+		<h2>Calcola l'area di numerosi cerchi</h2>
+		raggio minore <input type="text" id="rmin"> -
+		raggio maggiore <input type="text" id="rmax">
+		<button onclick="compute()">Calcola</button>
+		<div id="results"></div>
+	</div>
+</body>
+</html>

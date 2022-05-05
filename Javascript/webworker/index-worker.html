@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Esempio Web Worker</title>
+	<style type="text/css">
+		header{
+			background-color: #e0e0e0;
+			height: 180px;
+		}
+		#content{
+			border: solid 1px green;
+			padding: 5px;
+			width: 600px;
+			float: left;
+		}
+	</style>
+	<script type="text/javascript">
+		
+
+		// funzione attivata dal click del bottone
+		function compute(){
+			console.time("Time of the compute function");
+			// acquisizione dei valori dai campi di input
+			var rmin = document.getElementById("rmin").value;
+			var rmax = document.getElementById("rmax").value;
+			var arg =[];
+			arg[0] = rmin;
+			arg[1] = rmax;
+			var sarg = JSON.stringify(arg)
+			console.log(sarg);
+
+			w = new Worker("./worker/worker.js");
+			w.postMessage(sarg);
+			w.onmessage = function(e){
+				document.getElementById("results").innerText += e.data;
+				document.getElementById("results").innerHTML += "<br>";
+			}
+			//w = new Worker("./worker/worker.js");
+			//w.postMessage("1");
+			//w.onmessage = function(e){
+			//	document.getElementById("results").innerText += e.data;
+			//} 
+
+		console.timeEnd("Time of the compute function");
+		}
+	</script>
+</head>
+<body>
+	<header>
+		<h1>Esempio senza Web Worker</h1>
+	</header>
+	<div id="content">
+		<h2>Calcola l'area di numerosi cerchi</h2>
+		raggio minore <input type="text" id="rmin"> -
+		raggio maggiore <input type="text" id="rmax">
+		<button onclick="compute()">Calcola</button>
+		<div id="results"></div>
+	</div>
+</body>
+</html>
