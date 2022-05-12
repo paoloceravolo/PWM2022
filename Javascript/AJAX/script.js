@@ -23,5 +23,6 @@ var xhr = new XMLHttpRequest();
 console.log(xhr);
 xhr.onload = success;
 xhr.onerror = error;
-xhr.open('GET', 'https://www.dati.lombardia.it/resource/qkfs-wmmh.json');
+//xhr.open('GET', 'https://www.dati.lombardia.it/resource/qkfs-wmmh.json');
+xhr.open('GET', 'http://en.wikipedia.org/w/api.php?action=query&format=json&callback=data&prop=revisions&rvprop=content&lllimit=500&titles=Q_(novel)')
 xhr.send();
