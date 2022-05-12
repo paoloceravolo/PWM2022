@@ -11,6 +11,7 @@ function date(){
   function prep() {
   	document.getElementById("cont").innerHTML += "Carico dal server... ";
   	//throw new Error("Stop computation and show the call stack on console");
+    console.trace();
   };
   prep();
  	//throw new Error("Stop computation and show the call stack on console");
