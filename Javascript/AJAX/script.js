@@ -1,7 +1,7 @@
 function load(data){
 	//document.getElementById('cont').innerText = data[0].denominazione_centro; 
 	data.forEach(function(val,ind){
-		document.getElementById('cont').innerText += data[ind].denominazione_centro + ' ' + data[ind].comune; 
+		document.getElementById('cont').textContent += data[ind].denominazione_centro + ' ' + data[ind].comune; 
 		document.getElementById('cont').appendChild(document.createElement('br'));
 	});       
 }
