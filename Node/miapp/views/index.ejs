@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <meta charset="utf-8">
+</head>
+<body>
+
+    <h1><%= title %></h1>
+
+<p>Hai chiamato con metodo <%= method %></p>
+<% if (JSON.stringify(query) !=  '{}') { %>
+<p>Usando questa query: <%= query.pippo %></p>
+<% } %>
+
+<form action = "http://127.0.0.1:3000/login" method = "POST">
+  User: <input type = "text" name = "user_id">  <br>
+  Password: <input type = "text" name = "pass">
+  <input type = "submit" value = "Invia">
+</form>
+
+</body>
+</html> 
