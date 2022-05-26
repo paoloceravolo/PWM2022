@@ -1,97 +1,60 @@
-const express = require('express');
-const morgan = require('morgan');
-const path = require('path');
-const fs = require('fs');
-const serveIndex = require('serve-index');
-const session = require('express-session');
-const bodyParser = require('body-parser');
-const axios = require('axios');
+const MongoClient = require('mongodb').MongoClient;
 
-let urlEncoded = bodyParser.urlencoded({extended: false});
+// Connect URL
+const url = 'mongodb://127.0.0.1:27017';
 
-const app = express();
+// Connec to MongoDB
+MongoClient.connect(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+    }, (err, client) => {
+        if (err) {
+        return console.log(err);
+    }else{console.log('Mongo is connected')}
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+    // Create DB
+    const db = client.db('PWM');
 
-var data = '';
+    // Create a collection
+    const courses = db.collection('courses');
 
-var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'))
+    courses.insertOne({name: 'Web Security'}, (err, result) => {
+        //console.log(result);
+    });
 
-app.use(morgan('combined', {stream: accessLogStream}));
+     courses.insertMany([
+        {name: 'Web Security'},
+        {name: 'Distributed Databases'},
+        {name: 'Artificial Intelligence'}
+        ], (err, result) => {}
+        );
 
-app.use(express.static('public'));
-app.use('/images', serveIndex('public/images'));
+     courses.findOne({name: 'Web Security'}, (err, result) => {
+            console.log(result)
+     });
 
-app.use(session({
-secret: "PWM2021",
-resave: false,
-saveUninitialized: false,
-// secure: true require HTTPS, maxAge in milliseconds
-cookie: {secure: false, maxAge: 3600000} 
-}));
+  courses.deleteOne({name: 'Web Security'}, (err, result) => {
+            console.log(result)
+     });
 
-app.post('/login', urlEncoded, (req,res)=>{
-	if(req.session.user_id){console.log("Utente " + req.session.user_id + " autenticato");}
-	if(req.body.pass === 'admin'){
-    	console.log("Utente " + req.body.user_id + " autenticato");
-    req.session.user_id = req.body.user_id;
-    }else{
-    	console.log("Utente non autenticato");
-    delete req.session.user_id
-    }
-    res.send("Ciao cookies "+JSON.stringify(req.session));
+
+  courses.updateMany({},{$set:{'room': 'N.A.'}});
+
+  courses.updateOne({name: 'Distributed Databases'}, {$set:{'room': 'Gamma'}})
+
+    courses.findOne({name: 'Distributed Databases'}, (err, result) => {
+            console.log(result)
+     });
+
+
+
+
+
+
+
+
+
+
+
+
 });
-
-app.get('/cookies', function(req, res) {
-if(req.session.page_views){
-    console.log("Utente ha vistato la pagina " + req.session.page_views + " volte");
-    req.session.page_views++;
-    }else{
-    req.session.page_views = 1;
-    console.log("Prima volta che utente visita la pagina");
-    //console.log(JSON.stringify(req.session))
-    }
-    res.send("Ciao cookies "+JSON.stringify(req.session));
-});
-
-axios.get('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY')
-.then(res =>{
-	data = res.data.title;
-	console.log(res.data.title)
-	console.log(res.data.explanation)
-})
-.catch(error => {
-	console.log(error.message)
-})
-
-
-app.get('/', (req,res)=>{
-	console.log('richiesta', req.method, req.url)
-	res.render('index', {title: data, method: req.method, query: req.query});
-});
-
-app.post('/', function (req, res) {
-    console.log("Ricevuta una richiesta POST per la homepage");
-    res.send('Ciao POST !');
-})
-
-app.get('/citta/:name', function(req, res) { 
-const nome = req.params.name; 
-console.log("Ricevuta una richiesta per /centro %s",nome);
-res.send('Centro universitario '+nome);
-})
-
-app.get('/uni*', function(req, res) {   
-console.log("Ricevuta una richiesta per /uni*");
-res.send('Cerchi una università?');
-})
-
-
-var server = app.listen(3000, ()=>{
-	var host = server.address().address;
-	var port = server.address().port;
-
-	console.log(`Applicazione in ascolto su ${host} con porta ${port}`);
-})
